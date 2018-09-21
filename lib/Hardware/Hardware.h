@@ -1,33 +1,29 @@
-/**
- * Hardware Defines
- */
+#ifndef HARDWARE_H
+#define HARDWARE_H
 
-#define PIN_KEYPAD_R1 3
-#define PIN_KEYPAD_R2 8
-#define PIN_KEYPAD_R3 7
-#define PIN_KEYPAD_R4 5
-#define PIN_KEYPAD_C1 4
-#define PIN_KEYPAD_C2 2
-#define PIN_KEYPAD_C3 6
+#include <Keypad.h>
+#include <RGBLed.h>
+#include <Adafruit_SSD1306.h>
+#include <Switch.h>
+#include <Led.h>
+#include <beeper.h>
 
-#define PIN_LED_BUILTIN LED_BUILTIN
-#define PIN_OLED_RESET 1
+struct Hardware {
 
-#define PIN_LED1_R 26
-#define PIN_LED1_G 27
-#define PIN_LED1_B 28
+    Keypad* keypad;
+    RGBLed* led1;
+    RGBLed* led2;
+    RGBLed* led3;
 
-#define PIN_LED2_R 31
-#define PIN_LED2_G 30
-#define PIN_LED2_B 29
+    Adafruit_SSD1306* display;
 
-#define PIN_LED3_R 14
-#define PIN_LED3_G 15
-#define PIN_LED3_B 16
+    Led* ledDebug;
+    Led* ledArmed;
 
-#define PIN_ARM_SWITCH 22
+    Switch* armed;
+    Switch* trigger;
 
-#define PIN_TRIGGER_SWITCH 21
-#define PIN_TRIGGER_LED 20
+    Beeper* beeper;
+};
 
-#define PIN_BUZZER 9
+#endif
