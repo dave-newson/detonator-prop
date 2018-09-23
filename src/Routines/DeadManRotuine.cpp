@@ -13,7 +13,7 @@ void DeadManRoutine::before()
     displayPrint("");
 
     // Reset trigger
-    trigger = false;
+    trigger = DIRTY;
 }
 
 void DeadManRoutine::tick()
@@ -21,8 +21,8 @@ void DeadManRoutine::tick()
     // When not "Armed", the device is in safe mode
     if (!hardware->armed->isOn()) {
         
-        // Reset trigger
-        trigger = false;
+        // Reset trigger to Dirty
+        trigger = DIRTY;
 
         // Show "Safe"
         hardware->ledArmed->off();
@@ -35,17 +35,22 @@ void DeadManRoutine::tick()
     // -- WHEN ARMED --
 
     // Listen for first press of the Trigger
-    if (!trigger && hardware->trigger->isOn()) {
-        trigger = true;
+    if (trigger == CLEAN && hardware->trigger->isOn()) {
+        trigger = HELD;
     }
 
     // Listen for release of trigger
-    if (trigger && !hardware->trigger->isOn()) {
+    if (trigger == HELD && !hardware->trigger->isOn()) {
         controller->changeRoutineByName(ROUTINE_DETONATE);
+    }
+
+    // Detect clean trigger state
+    if (trigger == DIRTY && !hardware->trigger->isOn()) {
+        trigger = CLEAN;
     }
     
     // Trigger is being held?
-    if (trigger) {
+    if (trigger == HELD) {
 
         // Give a handy instruction
         displayPrint("HOLD");

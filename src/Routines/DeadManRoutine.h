@@ -10,6 +10,14 @@
 class DeadManRoutine : public Routine
 {
 
+    /**
+     * Trigger states
+     * DIRTY = Unknown; state needs to be cleaned
+     * CLEAN = Verified unheld
+     * HELD = Currently held down
+     */
+    enum TriggerState { DIRTY, CLEAN, HELD };
+
 public:
     DeadManRoutine(Hardware* _hardware);
     void before();
@@ -19,7 +27,7 @@ public:
 
 private:
     Hardware* hardware;
-    bool trigger;
+    TriggerState trigger;
 
     void displayPrint(const char* message);
 };
