@@ -1,9 +1,9 @@
 #include "RoutineController.h"
 #include "Routine.h"
+#include "Log.h"
 
 RoutineController::RoutineController()
 {
-    routines = new AFArray<Routine*>;
     active = nullptr;
 }
 
@@ -16,26 +16,66 @@ void RoutineController::tick()
 
 void RoutineController::addRoutine(Routine* routine)
 {
-    routines->add(routine);
-}
-
-void RoutineController::changeRoutine(const char* name)
-{
-    if (active) {
-        active->after();
-    }
+    routine->setController(this);
     
-    active = nullptr;
+    int space = -1;
 
-    while (routines->has_next()) {
-        Routine* routine = routines->next();
-        if (routine->getName() == name) {
-            active = routine;
+    int i;
+    for (i=0; i<MAX_ROUTINES; i++) {
+        if (!routines[i]) {
+            space = i;
             break;
         }
     }
-
-    if (active) {
-        active->before();
+    
+    if (i == -1) {
+        Log::error("Ran out of routine storage. Try raising the MAX_ROUTINES value");
+        return;
     }
+
+    routines[space] = routine;
+
+}
+
+Routine* RoutineController::getRoutineByName(const char* name)
+{
+    int i;
+    for(i=0; i<MAX_ROUTINES; i++) {
+        Routine* routine = routines[i];        
+        if (routine && routine->getName() == name) {
+            return routine;
+        }
+    }
+
+    Log::error("Failed to find routine with specific name");
+    Log::error(name);
+
+    return nullptr;
+}
+
+void RoutineController::changeRoutineByName(const char* name)
+{
+    Routine* routine = getRoutineByName(name);
+
+    if (routine) {
+        changeRoutine(routine);
+    }
+}
+
+void RoutineController::changeRoutine(Routine* routine)
+{
+    if (!routine) {
+        Log::error("Cannot transition to null routine!");
+    }
+
+    // If an existing routine is running, call it's "after" sequence
+    if (active) {
+        active->after();
+    }
+
+    // Switch to new routine
+    active = routine;
+
+    // Execute "Before" of new routine
+    active->before();
 }

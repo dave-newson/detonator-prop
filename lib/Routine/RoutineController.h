@@ -1,8 +1,11 @@
 #ifndef ROUTINE_CONTROLLER_H_
 #define ROUTINE_CONTROLLER_H_
 
-#include "AFArray.h"
 #include "Routine.h"
+
+#define MAX_ROUTINES 10
+
+class Routine;
 
 class RoutineController
 {
@@ -23,16 +26,29 @@ class RoutineController
         /**
          * Change to a new routine
          */
-        void changeRoutine(const char* name);
+        void changeRoutineByName(const char* name);
+
+        /**
+         * Change to new specific routine
+         */
+        void changeRoutine(Routine* routine);
+
+        /**
+         * Fetch a routine by its name
+         */
+        Routine* getRoutineByName(const char* name);
 
     private:
 
         /**
          * Collection of available routines
          */
-        AFArray<Routine*>* routines;
+        Routine* routines[MAX_ROUTINES];
 
-        Routine* active;
+        /**
+         * Pointer to active routine
+         */
+        Routine* active = nullptr;
 };
 
 #endif

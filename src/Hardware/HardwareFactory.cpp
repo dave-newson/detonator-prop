@@ -5,6 +5,7 @@
 #include "Adafruit_SSD1306.h"
 #include "Arduino.h"
 #include "Beeper.h"
+#include "Log.h"
 
 #define PIN_KEYPAD_R1 3
 #define PIN_KEYPAD_R2 8
@@ -54,6 +55,22 @@ const char hexaKeys[ROWS][COLS] = {
 byte rowPins[ROWS] = {PIN_KEYPAD_R1, PIN_KEYPAD_R2, PIN_KEYPAD_R3, PIN_KEYPAD_R4};
 byte colPins[COLS] = {PIN_KEYPAD_C1, PIN_KEYPAD_C2, PIN_KEYPAD_C3}; 
 
+Keypad keypad(makeKeymap(hexaKeys), rowPins, colPins, ROWS, COLS);
+
+
+Led ledArmed(PIN_TRIGGER_LED);
+Led ledDebug(PIN_LED_BUILTIN);
+
+RGBLed led1(CATHODE, PIN_LED1_R, PIN_LED1_G, PIN_LED1_B);
+RGBLed led2(CATHODE, PIN_LED2_R, PIN_LED2_G, PIN_LED2_B);
+RGBLed led3(CATHODE, PIN_LED3_R, PIN_LED3_G, PIN_LED3_B);
+
+Beeper beeper(PIN_BEEPER);
+
+Switch armSwitch(PIN_ARM_SWITCH);
+Switch triggerSwitch(PIN_TRIGGER_SWITCH);
+
+Adafruit_SSD1306 display(PIN_OLED_RESET);
 
 /**
  * Creates the Hardware struct
@@ -63,31 +80,29 @@ Hardware HardwareFactory() {
     Hardware hardware = {};
 
     // LEDs
-    hardware.ledArmed = new Led(PIN_TRIGGER_LED);
-    hardware.ledDebug = new Led(PIN_LED_BUILTIN);
+    hardware.ledArmed = &ledArmed;
+    hardware.ledDebug = &ledDebug;
 
     // RGB LEDs
-    hardware.led1 = new RGBLed(CATHODE, PIN_LED1_R, PIN_LED1_G, PIN_LED1_B);
-    hardware.led2 = new RGBLed(CATHODE, PIN_LED2_R, PIN_LED2_G, PIN_LED2_B);
-    hardware.led3 = new RGBLed(CATHODE, PIN_LED3_R, PIN_LED3_G, PIN_LED3_B);
+    hardware.led1 = &led1;
+    hardware.led2 = &led2;
+    hardware.led3 = &led3;
 
     // Hardware: OLED
-    hardware.display = new Adafruit_SSD1306(PIN_OLED_RESET);
-    hardware.display->begin(SSD1306_SWITCHCAPVCC, 0x3C, false);
+    hardware.display = &display;
+    hardware.display->begin(SSD1306_SWITCHCAPVCC, 0x3C, true);
     hardware.display->clearDisplay();
     hardware.display->display();
-
-
-    hardware.beeper = new Beeper(PIN_BEEPER);
+    
+    // Beeper
+    hardware.beeper = &beeper;
 
     // Keypad
-    hardware.keypad = new Keypad(makeKeymap(hexaKeys), rowPins, colPins, ROWS, COLS); 
-    delay(100);
-    hardware.keypad->getKey();
+    hardware.keypad = &keypad;
 
     // Switches
-    hardware.armed = new Switch(PIN_ARM_SWITCH);
-    hardware.trigger = new Switch(PIN_TRIGGER_SWITCH);
+    hardware.armed = &armSwitch;
+    hardware.trigger = &triggerSwitch;
 
     return hardware;
 }

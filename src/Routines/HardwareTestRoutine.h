@@ -19,9 +19,9 @@ public:
 
 private:
     Hardware* hardware;
-    Chrono* timer1;
-    Chrono* timer2;
-    Chrono* timer3;
+    Chrono timer1;
+    Chrono timer2;
+    Chrono timer3;
     int colorSlide;
 
     void resetDisplay();

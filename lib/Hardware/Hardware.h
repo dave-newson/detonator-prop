@@ -1,12 +1,12 @@
 #ifndef HARDWARE_H
 #define HARDWARE_H
 
-#include <Keypad.h>
-#include <RGBLed.h>
-#include <Adafruit_SSD1306.h>
-#include <Switch.h>
-#include <Led.h>
-#include <beeper.h>
+#include "Keypad.h"
+#include "RGBLed.h"
+#include "Adafruit_SSD1306.h"
+#include "Switch.h"
+#include "Led.h"
+#include "beeper.h"
 
 struct Hardware {
 
