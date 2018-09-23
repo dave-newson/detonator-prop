@@ -18,8 +18,8 @@ void CountdownRoutine::before()
     hardware->display->setTextSize(1);
     hardware->display->setTextColor(WHITE);
 
-    // TODO: Port duration to parameter
-    duration = 99 * 60 * 60; // 4h
+    // TODO: Port duration to "start" arg
+    duration = 2 * 60; // 2min
 }
 
 void CountdownRoutine::tick()
@@ -51,7 +51,7 @@ void CountdownRoutine::tick()
     hardware->display->clearDisplay();
 
     // Display 
-    hardware->display->print("[");
+    hardware->display->print("\n     ");
     hardware->display->print(timeSeg[0]);
     hardware->display->print(":");
     hardware->display->print(timeSeg[1]);
@@ -59,7 +59,6 @@ void CountdownRoutine::tick()
     hardware->display->print(timeSeg[2]);
     hardware->display->print(":");
     hardware->display->print(timeSeg[3]);
-    hardware->display->print("]");
     hardware->display->display();
 
     // Boom on fully lapsed

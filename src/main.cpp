@@ -8,35 +8,46 @@
 #include "Routines/HardwareTestRoutine.h"
 #include "Routines/DetonateRoutine.h"
 #include "Routines/CountdownRoutine.h"
+#include "Routines/DeadManRoutine.h"
+#include "Routines/ManualTriggerRoutine.h"
+#include "Routines/ModeSelectRoutine.h"
 
 Hardware hardware = HardwareFactory();
 RoutineController controller;
 DetonateRoutine r1(&hardware);
 HardwareTestRoutine r2(&hardware);
 CountdownRoutine r3(&hardware);
+DeadManRoutine r4(&hardware);
+ManualTriggerRoutine r5(&hardware);
+ModeSelectRoutine modeSelectRoutine(&hardware);
 
 /**
  * Main entry point
  */
 int main()
 {
-    // For debugger
+    // For debugging
     Serial.begin(9600);
     delay(1000);
-    
-    // Init hardware
-    Log::info("Setting up hardware ...");
-    
 
-    // Start routine controller
-    Log::info("Setting up routines ...");
+    Log::info("Booting!");
     
+    Log::info("Setting up routines ...");
+    controller.addRoutine(&modeSelectRoutine);
     controller.addRoutine(&r1);
     controller.addRoutine(&r2);
     controller.addRoutine(&r3);
+    controller.addRoutine(&r4);
+    controller.addRoutine(&r5);
     
+    Log::info("Setting up mode selection ...");
+    modeSelectRoutine.addMode(&r2, "Hardware test");
+    modeSelectRoutine.addMode(&r3, "Countdown");
+    modeSelectRoutine.addMode(&r4, "Dead Man Trigger");
+    modeSelectRoutine.addMode(&r5, "Manual Trigger");
+
     Log::info("Entering default routine ...");
-    controller.changeRoutineByName(ROUTINE_COUNTDOWN);
+    controller.changeRoutineByName(ROUTINE_MODE_SELECT);
     for (;;) {
         // Tick active routine forever
         controller.tick();
