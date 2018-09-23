@@ -19,21 +19,17 @@ void DetonateRoutine::before()
 {
     Log::info("Routine: Detonate");
 
+    
+    // State resets
     timer1.restart();
     timer2.restart();
-    
-    // LED state
+    stage = 0;
     ledState = false;
-    hardware->led1->off();
-    hardware->led2->off();
-    hardware->led3->off();
 
-    // Prepare screen
+    // Hardware reset
+    hardware->reset();
     hardware->display->setTextSize(2);
     hardware->display->setTextColor(WHITE);
-
-    // Reset stage
-    stage = 0;
 }
 
 void DetonateRoutine::tick()

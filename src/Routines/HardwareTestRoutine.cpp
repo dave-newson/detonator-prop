@@ -13,25 +13,20 @@ void HardwareTestRoutine::before()
 {
     Log::info("Routine: Hardware test");
 
+    // State Resets
     colorSlide = 0;
-
     timer1.restart();
     timer2.restart();
     timer3.restart();
 
-    // text display tests
+    // Hardware reset    
+    hardware->reset();
     hardware->display->setTextSize(1);
     hardware->display->setTextColor(WHITE);
-    hardware->display->clearDisplay();
-    hardware->display->setCursor(0,0);
+
+    // Screen text (never changes)
     hardware->display->print("TEST MODE\n");
     hardware->display->display();
-
-    // Reset LEDs
-    hardware->led1->off();
-    hardware->led2->off();
-    hardware->led3->off();
-    hardware->ledArmed->off();
 }
 
 void HardwareTestRoutine::tick()

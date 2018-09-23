@@ -1,5 +1,6 @@
 #include "DeadManRoutine.h"
 #include "DetonateRoutine.h"
+#include "Log.h"
 
 DeadManRoutine::DeadManRoutine(Hardware* _hardware)
 {
@@ -8,11 +9,14 @@ DeadManRoutine::DeadManRoutine(Hardware* _hardware)
 
 void DeadManRoutine::before()
 {
+    Log::info("Routine: Dead Man");
+
+    // Hardware resets
+    hardware->reset();
     hardware->display->setTextSize(2);
     hardware->display->setTextColor(WHITE);
-    displayPrint("");
 
-    // Reset trigger
+    // State reset
     trigger = DIRTY;
 }
 

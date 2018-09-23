@@ -8,12 +8,15 @@ ModeSelectRoutine::ModeSelectRoutine(Hardware* _hardware)
 
 void ModeSelectRoutine::before()
 {
+    // Hardware resets
+    hardware->reset();
     hardware->display->setTextSize(1);
     hardware->display->setTextColor(WHITE);
-    displayPrint("");
 
-    // Reset mode selection to Zero
+    // State resets
     selected = 0;
+
+    // Force display update for selection 0
     updateSelection();
 }
 

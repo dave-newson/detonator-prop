@@ -11,10 +11,11 @@ void CountdownRoutine::before()
 {
     Log::info("Routine: Countdown Timer");
 
-    // Start timer
+    // State resets
     timer1.restart();
 
-    // Update screen
+    // Hardware
+    hardware->reset();
     hardware->display->setTextSize(1);
     hardware->display->setTextColor(WHITE);
 

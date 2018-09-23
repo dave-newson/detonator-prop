@@ -8,22 +8,22 @@
 #include "Led.h"
 #include "beeper.h"
 
-struct Hardware {
+class Hardware {
 
+public:
     Keypad* keypad;
     RGBLed* led1;
     RGBLed* led2;
     RGBLed* led3;
-
     Adafruit_SSD1306* display;
-
     Led* ledDebug;
     Led* ledArmed;
-
     Switch* armed;
     Switch* trigger;
-
     Beeper* beeper;
+
+    void reset();
+
 };
 
 #endif

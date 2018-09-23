@@ -1,5 +1,6 @@
 #include "ManualTriggerRoutine.h"
 #include "DetonateRoutine.h"
+#include "Log.h"
 
 ManualTriggerRoutine::ManualTriggerRoutine(Hardware* _hardware)
 {
@@ -8,12 +9,15 @@ ManualTriggerRoutine::ManualTriggerRoutine(Hardware* _hardware)
 
 void ManualTriggerRoutine::before()
 {
+    Log::info("Routine: Manual Trigger");
+
+    // State resets
+    trigger = DIRTY;
+
+    // Hardware reset
+    hardware->reset();
     hardware->display->setTextSize(2);
     hardware->display->setTextColor(WHITE);
-    displayPrint("");
-
-    // Reset trigger
-    trigger = DIRTY;
 }
 
 void ManualTriggerRoutine::tick()
