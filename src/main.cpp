@@ -7,11 +7,13 @@
 #include "Log.h"
 #include "Routines/HardwareTestRoutine.h"
 #include "Routines/DetonateRoutine.h"
+#include "Routines/CountdownRoutine.h"
 
 Hardware hardware = HardwareFactory();
 RoutineController controller;
 DetonateRoutine r1(&hardware);
 HardwareTestRoutine r2(&hardware);
+CountdownRoutine r3(&hardware);
 
 /**
  * Main entry point
@@ -31,9 +33,10 @@ int main()
     
     controller.addRoutine(&r1);
     controller.addRoutine(&r2);
+    controller.addRoutine(&r3);
     
     Log::info("Entering default routine ...");
-    controller.changeRoutineByName(ROUTINE_HARDWARE_TEST);
+    controller.changeRoutineByName(ROUTINE_COUNTDOWN);
     for (;;) {
         // Tick active routine forever
         controller.tick();

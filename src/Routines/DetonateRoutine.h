@@ -21,6 +21,8 @@ public:
 private:
     Hardware* hardware;
     Chrono timer1;
+    Chrono timer2;
+    bool ledState;
     Routine* returnRoutine = nullptr;
     int stage = 0;
 };
