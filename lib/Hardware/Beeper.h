@@ -1,6 +1,8 @@
 #ifndef BEEPER_H
 #define BEEPER_H
 
+#include "Arduino.h"
+
 class Beeper
 {
 

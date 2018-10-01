@@ -1,7 +1,7 @@
 #ifndef MODE_SELECT_ROUTINE_H_
 #define MODE_SELECT_ROUTINE_H_
 
-#include "Hardware.h"
+#include "Hardware/Hardware.h"
 #include "Routine.h"
 #include "Chrono.h"
 

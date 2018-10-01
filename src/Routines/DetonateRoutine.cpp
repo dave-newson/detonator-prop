@@ -1,5 +1,5 @@
 #include "DetonateRoutine.h"
-#include "Hardware.h"
+#include "Hardware/Hardware.h"
 #include "Log.h"
 
 DetonateRoutine::DetonateRoutine(Hardware* _hardware)
@@ -23,8 +23,6 @@ void DetonateRoutine::before()
     // State resets
     timer1.restart();
     timer2.restart();
-    stage = 0;
-    ledState = false;
 
     // Hardware reset
     hardware->reset();
@@ -34,56 +32,36 @@ void DetonateRoutine::before()
 
 void DetonateRoutine::tick()
 {
-    int elapsed = timer1.elapsed();
-
-    if (timer2.hasPassed(500)) {
-        timer2.restart();
-        ledState = !ledState;
-
-        if (ledState) {
-            hardware->led1->on(Color(255, 255, 0));
-            hardware->led2->on(Color(255, 255, 0));
-            hardware->led3->on(Color(255, 255, 0));
-        } else {
-            hardware->led1->off();
-            hardware->led2->off();
-            hardware->led3->off();
-        }
-    }
-
-    if (stage == 0) {
-        stage++;
-
-        hardware->display->clearDisplay();
-        hardware->display->setCursor(0,0);        
-        hardware->display->print(" DETONATE ");
-        hardware->display->display();
-
-        hardware->beeper->note(100);
-    } else if (elapsed > 1000 && stage == 1) {
-        stage++;
-
-        hardware->display->clearDisplay();
-        hardware->display->setCursor(0,0);
-        hardware->display->print("!DETONATE!");
-        hardware->display->display();
-
-        hardware->beeper->note(200);
-    } else if (elapsed > 2000 && stage == 2) {
-        stage++;
-
-        hardware->display->clearDisplay();
-        hardware->display->setCursor(0,0);        
-        hardware->display->print(" DETONATE ");
-        hardware->display->display();
-
-        hardware->beeper->note(300);
-	} else if (elapsed > 3000 && stage == 3) {
-
+    if (!timer2.hasPassed(100)) {
+        hardware->led1->on(Color(255, 255, 255));
+        hardware->led2->on(Color(255, 255, 255));
+        hardware->led3->on(Color(255, 255, 255));
+        hardware->beeper->note(60);
+    
+    } else if (!timer2.hasPassed(200)) {
         hardware->beeper->silence();
-
+        hardware->led1->off();
+        hardware->led2->off();
+        hardware->led3->off();
+    } else if (!timer2.hasPassed(300)) {
+        hardware->led1->on(Color(255, 255, 255));
+        hardware->led2->on(Color(255, 255, 255));
+        hardware->led3->on(Color(255, 255, 255));
+        hardware->beeper->note(100);
+    } else if (!timer2.hasPassed(400)) {
+        hardware->beeper->silence();
+        hardware->led1->off();
+        hardware->led2->off();
+        hardware->led3->off();
+    } else {
+        timer2.restart();
+    }
+    
+    if (timer1.hasPassed(2000)) {
         if (returnRoutine) {
             controller->changeRoutine(returnRoutine);
+        } else {
+            controller->changeRoutineToDefault();
         }
     }
 
@@ -91,7 +69,6 @@ void DetonateRoutine::tick()
 
 void DetonateRoutine::after()
 {
-    hardware->display->clearDisplay();
-    hardware->display->display();
+    hardware->reset();
     returnRoutine = nullptr;
 }

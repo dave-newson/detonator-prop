@@ -74,7 +74,7 @@ void ModeSelectRoutine::displayPrint(const char* message)
 {
     hardware->display->clearDisplay();
     hardware->display->setCursor(0,0);
-    hardware->display->print("-- MODE SELECTION --\n\n");
+    hardware->display->print("   MODE SELECTION\n\n");
     hardware->display->print(selected + 1);
     hardware->display->print(" ");
     hardware->display->print(message);

@@ -1,7 +1,7 @@
 #ifndef HARDWARE_TEST_ROUTINE_H_
 #define HARDWARE_TEST_ROUTINE_H_
 
-#include "Hardware.h"
+#include "Hardware/Hardware.h"
 #include "Routine.h"
 #include "Chrono.h"
 

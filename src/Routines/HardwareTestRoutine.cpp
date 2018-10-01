@@ -1,5 +1,5 @@
 #include "HardwareTestRoutine.h"
-#include "hardware.h"
+#include "Hardware/hardware.h"
 #include "RGBLed.h"
 #include "Log.h"
 #include "DetonateRoutine.h"

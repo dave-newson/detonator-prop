@@ -18,6 +18,8 @@ class RoutineController
          */
         void addRoutine(Routine* routine);
 
+        void setDefaultRoutine(Routine* routine);
+
         /**
          * Call tick for the active routine
          */
@@ -32,6 +34,11 @@ class RoutineController
          * Change to new specific routine
          */
         void changeRoutine(Routine* routine);
+
+        /**
+         * Change to default routine
+         */
+        void changeRoutineToDefault();
 
         /**
          * Fetch a routine by its name
@@ -49,6 +56,11 @@ class RoutineController
          * Pointer to active routine
          */
         Routine* active = nullptr;
+
+        /**
+         * Pointer to default routine
+         */
+        Routine* defaultRoutine = nullptr;
 };
 
 #endif

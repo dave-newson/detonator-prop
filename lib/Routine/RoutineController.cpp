@@ -37,6 +37,16 @@ void RoutineController::addRoutine(Routine* routine)
 
 }
 
+void RoutineController::setDefaultRoutine(Routine* routine)
+{
+    defaultRoutine = routine;
+}
+
+void RoutineController::changeRoutineToDefault()
+{
+    changeRoutine(defaultRoutine);
+}
+
 Routine* RoutineController::getRoutineByName(const char* name)
 {
     int i;

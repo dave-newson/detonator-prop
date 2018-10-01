@@ -1,5 +1,10 @@
 #include "Hardware.h"
 
+void Hardware::tick()
+{
+    keypad->tick();
+}
+
 void Hardware::reset()
 {
     led1->off();

@@ -1,7 +1,7 @@
 #ifndef DEADMAN_ROUTINE_H_
 #define DEADMAN_ROUTINE_H_
 
-#include "Hardware.h"
+#include "Hardware/Hardware.h"
 #include "Routine.h"
 #include "Chrono.h"
 
@@ -28,6 +28,9 @@ public:
 private:
     Hardware* hardware;
     TriggerState trigger;
+    Chrono timer1;
+    Chrono timer2;
+    Chrono timer3;
 
     void displayPrint(const char* message);
 };

@@ -1,7 +1,7 @@
 #ifndef MANUAL_TRIGGER_ROUTINE_H_
 #define MANUAL_TRIGGER_ROUTINE_H_
 
-#include "Hardware.h"
+#include "Hardware/Hardware.h"
 #include "Routine.h"
 #include "Chrono.h"
 

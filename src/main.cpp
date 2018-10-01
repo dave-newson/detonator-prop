@@ -1,6 +1,6 @@
 
 #include "Arduino.h"
-#include "Hardware.h"
+#include "Hardware/Hardware.h"
 #include "Hardware/HardwareFactory.h"
 #include "Chrono.h"
 #include "RoutineController.h"
@@ -39,6 +39,7 @@ int main()
     controller.addRoutine(&r3);
     controller.addRoutine(&r4);
     controller.addRoutine(&r5);
+    controller.setDefaultRoutine(&r4); // Dead man
     
     Log::info("Setting up mode selection ...");
     modeSelectRoutine.addMode(&r2, "Hardware test");
@@ -47,9 +48,10 @@ int main()
     modeSelectRoutine.addMode(&r5, "Manual Trigger");
 
     Log::info("Entering default routine ...");
-    controller.changeRoutineByName(ROUTINE_MODE_SELECT);
+    
+    controller.changeRoutineToDefault();
     for (;;) {
-        // Tick active routine forever
+        hardware.tick();
         controller.tick();
     }
 

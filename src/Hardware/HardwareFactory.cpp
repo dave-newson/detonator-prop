@@ -1,4 +1,4 @@
-#include "Hardware.h"
+#include "Hardware/Hardware.h"
 #include "Led.h"
 #include "RGBLed.h"
 #include "Switch.h"
@@ -6,6 +6,7 @@
 #include "Arduino.h"
 #include "Beeper.h"
 #include "Log.h"
+#include "Module/DisplayModule.h"
 
 #define PIN_KEYPAD_R1 3
 #define PIN_KEYPAD_R2 8
@@ -57,7 +58,6 @@ byte colPins[COLS] = {PIN_KEYPAD_C1, PIN_KEYPAD_C2, PIN_KEYPAD_C3};
 
 Keypad keypad(makeKeymap(hexaKeys), rowPins, colPins, ROWS, COLS);
 
-
 Led ledArmed(PIN_TRIGGER_LED);
 Led ledDebug(PIN_LED_BUILTIN);
 
@@ -71,6 +71,12 @@ Switch armSwitch(PIN_ARM_SWITCH);
 Switch triggerSwitch(PIN_TRIGGER_SWITCH);
 
 Adafruit_SSD1306 display(PIN_OLED_RESET);
+
+/**
+ * Modules
+ */
+DisplayModule displayModule(&display);
+KeypadModule keypadModule(&keypad, &beeper);
 
 /**
  * Creates the Hardware struct
@@ -89,16 +95,16 @@ Hardware HardwareFactory() {
     hardware.led3 = &led3;
 
     // Hardware: OLED
-    hardware.display = &display;
+    hardware.display = &displayModule;
     hardware.display->begin(SSD1306_SWITCHCAPVCC, 0x3C, true);
     hardware.display->clearDisplay();
     hardware.display->display();
-    
+
     // Beeper
     hardware.beeper = &beeper;
 
     // Keypad
-    hardware.keypad = &keypad;
+    hardware.keypad = &keypadModule;
 
     // Switches
     hardware.armed = &armSwitch;
