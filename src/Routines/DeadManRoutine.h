@@ -32,7 +32,7 @@ private:
     Chrono timer2;
     Chrono timer3;
 
-    void displayPrint(const char* message);
+    void displayPrint(const char* message, int offset);
 };
 
 #endif

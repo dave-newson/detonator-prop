@@ -1,5 +1,6 @@
-
-#include "Arduino.h"
+#include <Arduino.h>
+#include <Wire.h>
+#include <SPI.h>
 #include "Hardware/Hardware.h"
 #include "Hardware/HardwareFactory.h"
 #include "Chrono.h"
@@ -33,13 +34,13 @@ int main()
     Log::info("Booting!");
     
     Log::info("Setting up routines ...");
-    controller.addRoutine(&modeSelectRoutine);
+    controller.addRoutine(&r2);
     controller.addRoutine(&r1);
     controller.addRoutine(&r2);
     controller.addRoutine(&r3);
     controller.addRoutine(&r4);
     controller.addRoutine(&r5);
-    controller.setDefaultRoutine(&r4); // Dead man
+    controller.setDefaultRoutine(&modeSelectRoutine);
     
     Log::info("Setting up mode selection ...");
     modeSelectRoutine.addMode(&r2, "Hardware test");

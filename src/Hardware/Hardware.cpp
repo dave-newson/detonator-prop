@@ -14,5 +14,6 @@ void Hardware::reset()
     
     display->clearDisplay();
     display->setCursor(0,0);
+    display->drawPixel(2, 2, WHITE);
     display->display();
 }

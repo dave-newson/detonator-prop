@@ -13,7 +13,7 @@ void DeadManRoutine::before()
 
     // Hardware resets
     hardware->reset();
-    hardware->display->setTextSize(2);
+    hardware->display->setTextSize(4);
     hardware->display->setTextColor(WHITE);
 
     // Timers
@@ -56,7 +56,7 @@ void DeadManRoutine::tick()
             hardware->led3->off();
         }
 
-        displayPrint("SAFE");
+        displayPrint("SAFE", 20);
 
         // No other operation
         return;
@@ -79,6 +79,7 @@ void DeadManRoutine::tick()
         if (timer2.hasPassed(100)) {
             DetonateRoutine* detonate = (DetonateRoutine*) controller->getRoutineByName(ROUTINE_DETONATE);
             detonate->start(this);
+            return;
         }
     }
 
@@ -91,7 +92,7 @@ void DeadManRoutine::tick()
     if (trigger == HELD) {
 
         // Give a handy instruction
-        displayPrint("HOLD");
+        displayPrint("HOLD", 20);
         
         // Flash LEDs every X seconds.
         if (timer1.hasPassed(250)) {
@@ -111,7 +112,7 @@ void DeadManRoutine::tick()
     } else {
 
         // Just show the device is armed
-        displayPrint("ARMED");
+        displayPrint("ARMED", 8);
         hardware->ledArmed->on();
 
         hardware->led1->on(Color(255, 255, 0));
@@ -124,13 +125,13 @@ void DeadManRoutine::tick()
 
 void DeadManRoutine::after()
 {
-    // Noop
+    hardware->reset();
 }
 
-void DeadManRoutine::displayPrint(const char* message)
+void DeadManRoutine::displayPrint(const char* message, int offset = 8)
 {
     hardware->display->clearDisplay();
-    hardware->display->setCursor(0,0);
+    hardware->display->setCursor(offset,0);
     hardware->display->print(message);
     hardware->display->display();
 }

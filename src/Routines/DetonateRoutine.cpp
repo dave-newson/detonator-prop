@@ -18,41 +18,43 @@ void DetonateRoutine::start(Routine* _returnAfter)
 void DetonateRoutine::before()
 {
     Log::info("Routine: Detonate");
-
-    
+   
     // State resets
     timer1.restart();
     timer2.restart();
 
     // Hardware reset
     hardware->reset();
-    hardware->display->setTextSize(2);
-    hardware->display->setTextColor(WHITE);
+
+    hardware->display->clearDisplay();
+    hardware->display->setCursor(0,0);
+    hardware->display->print("BEANS");
+    hardware->display->display();
 }
 
 void DetonateRoutine::tick()
 {
+
     if (!timer2.hasPassed(100)) {
         hardware->led1->on(Color(255, 255, 255));
         hardware->led2->on(Color(255, 255, 255));
         hardware->led3->on(Color(255, 255, 255));
         hardware->beeper->note(60);
-    
     } else if (!timer2.hasPassed(200)) {
-        hardware->beeper->silence();
         hardware->led1->off();
         hardware->led2->off();
         hardware->led3->off();
+        hardware->beeper->silence();
     } else if (!timer2.hasPassed(300)) {
         hardware->led1->on(Color(255, 255, 255));
         hardware->led2->on(Color(255, 255, 255));
         hardware->led3->on(Color(255, 255, 255));
         hardware->beeper->note(100);
     } else if (!timer2.hasPassed(400)) {
-        hardware->beeper->silence();
         hardware->led1->off();
         hardware->led2->off();
         hardware->led3->off();
+        hardware->beeper->silence();
     } else {
         timer2.restart();
     }

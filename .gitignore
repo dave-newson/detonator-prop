@@ -1,6 +1,6 @@
 .idea
-.pioenvs
-.piolibdeps
+.pio
+.vscode
 .vscode/.browse.*
 .vscode/c_cpp_properties.json
 .vscode/launch.json
