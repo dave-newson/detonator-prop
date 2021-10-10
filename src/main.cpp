@@ -28,19 +28,22 @@ ModeSelectRoutine modeSelectRoutine(&hardware);
 int main()
 {
     // For debugging
-    Serial.begin(9600);
-    delay(1000);
+    Serial1.begin(9600);
+    // while(!Serial); // Enable only for debugging.
 
     Log::info("Booting!");
     
+    Wire.begin();
+    hardware.display->begin(SSD1306_SWITCHCAPVCC, 0x3C, true);
+
     Log::info("Setting up routines ...");
-    controller.addRoutine(&r2);
+    controller.addRoutine(&modeSelectRoutine);
     controller.addRoutine(&r1);
     controller.addRoutine(&r2);
     controller.addRoutine(&r3);
     controller.addRoutine(&r4);
     controller.addRoutine(&r5);
-    controller.setDefaultRoutine(&modeSelectRoutine);
+    controller.setDefaultRoutine(&r2);
     
     Log::info("Setting up mode selection ...");
     modeSelectRoutine.addMode(&r2, "Hardware test");

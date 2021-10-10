@@ -23,7 +23,7 @@ public:
     void invertDisplay(uint8_t i);
 
 private:
-    Adafruit_SSD1306* _display;
+    Adafruit_SSD1306* _display = nullptr;
 };
 
 #endif

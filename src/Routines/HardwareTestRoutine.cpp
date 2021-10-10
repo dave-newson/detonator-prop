@@ -25,8 +25,9 @@ void HardwareTestRoutine::before()
     hardware->display->setTextColor(WHITE);
 
     // Screen text (never changes)
-    hardware->display->print("TEST MODE\n");
+    hardware->display->print(" TEST MODE\n");
     hardware->display->display();
+    
 }
 
 void HardwareTestRoutine::tick()
@@ -61,6 +62,16 @@ void HardwareTestRoutine::tick()
         colorSlide = (colorSlide > 3 ? 1 : colorSlide + 1);
 
         // Colorise LED
+        hardware->led1->on(Color(
+            (colorSlide == 1) ? 255 : 0,
+            (colorSlide == 2) ? 255 : 0,
+            (colorSlide == 3) ? 255 : 0
+        ));
+        hardware->led2->on(Color(
+            (colorSlide == 1) ? 255 : 0,
+            (colorSlide == 2) ? 255 : 0,
+            (colorSlide == 3) ? 255 : 0
+        ));
         hardware->led3->on(Color(
             (colorSlide == 1) ? 255 : 0,
             (colorSlide == 2) ? 255 : 0,
@@ -74,17 +85,10 @@ void HardwareTestRoutine::tick()
         detonate->start(this);
 
     } else {
-
         if (hardware->armed->isOn()) {
             hardware->led1->on(Color(255, 0, 0));
-        } else {
-            hardware->led1->on(Color(0, 255, 0));
-        }
-
-        if (hardware->trigger->isOn()) {
             hardware->led2->on(Color(255, 0, 0));
-        } else {
-            hardware->led2->on(Color(0, 255, 0));
+            hardware->led3->on(Color(255, 0, 0));
         }
     }
 
