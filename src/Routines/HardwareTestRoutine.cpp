@@ -82,7 +82,7 @@ void HardwareTestRoutine::tick()
     // Trigger Switch, buzzer, Led 1 & 2
     if (hardware->armed->isOn() && hardware->trigger->isOn()) {
         DetonateRoutine* detonate = (DetonateRoutine*) controller->getRoutineByName(ROUTINE_DETONATE);
-        detonate->start(this);
+        detonate->start(nullptr);
 
     } else {
         if (hardware->armed->isOn()) {

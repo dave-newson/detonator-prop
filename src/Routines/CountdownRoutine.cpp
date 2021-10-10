@@ -16,7 +16,7 @@ void CountdownRoutine::before()
 
     // Hardware
     hardware->reset();
-    hardware->display->setTextSize(1);
+    hardware->display->setTextSize(2);
     hardware->display->setTextColor(WHITE);
 
     // TODO: Port duration to "start" arg

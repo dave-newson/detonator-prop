@@ -8,7 +8,7 @@ DetonateRoutine::DetonateRoutine(Hardware* _hardware)
     returnRoutine = nullptr;
 }
 
-void DetonateRoutine::start(Routine* _returnAfter)
+void DetonateRoutine::start(Routine* _returnAfter = nullptr)
 {
     Log::info("Transitoning to donate routine ...");
     returnRoutine = _returnAfter;
@@ -28,7 +28,8 @@ void DetonateRoutine::before()
 
     hardware->display->clearDisplay();
     hardware->display->setCursor(0,0);
-    hardware->display->print("BEANS");
+    hardware->display->setTextSize(2);
+    hardware->display->print("DETONATE");
     hardware->display->display();
 }
 

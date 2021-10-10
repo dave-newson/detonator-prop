@@ -16,7 +16,7 @@ void ManualTriggerRoutine::before()
 
     // Hardware reset
     hardware->reset();
-    hardware->display->setTextSize(2);
+    hardware->display->setTextSize(4);
     hardware->display->setTextColor(WHITE);
 }
 
@@ -30,7 +30,7 @@ void ManualTriggerRoutine::tick()
 
         // Show "Safe"
         hardware->ledArmed->off();
-        displayPrint("SAFE");
+        displayPrint("SAFE", 20);
 
         // No other operation
         return;
@@ -38,7 +38,7 @@ void ManualTriggerRoutine::tick()
 
     // -- WHEN ARMED --
     // Just show the device is armed
-    displayPrint("ARMED");
+    displayPrint("ARMED", 8);
     hardware->ledArmed->on();
 
     // Listen for first press of the Trigger
@@ -57,10 +57,10 @@ void ManualTriggerRoutine::after()
     // Noop
 }
 
-void ManualTriggerRoutine::displayPrint(const char* message)
+void ManualTriggerRoutine::displayPrint(const char* message, int offset = 8)
 {
     hardware->display->clearDisplay();
-    hardware->display->setCursor(0,0);
+    hardware->display->setCursor(offset,0);
     hardware->display->print(message);
     hardware->display->display();
 }

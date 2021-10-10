@@ -27,7 +27,7 @@ public:
 private:
     Hardware* hardware;
     TriggerState trigger;
-    void displayPrint(const char* message);
+    void displayPrint(const char* message, int offset);
 };
 
 #endif

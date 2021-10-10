@@ -16,7 +16,7 @@ public:
     void after();
     const char* getName() { return ROUTINE_DETONATE; };
     void tick();
-    void start(Routine* _returnAfter);
+    void start(Routine* _returnAfter = nullptr);
 
 private:
     Hardware* hardware;

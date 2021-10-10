@@ -102,10 +102,12 @@ void DeadManRoutine::tick()
                 hardware->ledArmed->off();
                 hardware->led1->on(Color(255, 0, 0));
                 hardware->led2->off();
+                hardware->led3->off();
             } else {
                 hardware->ledArmed->on();
                 hardware->led1->off();
                 hardware->led2->on(Color(255, 0, 0));
+                hardware->led3->on(Color(255, 0, 0));
             }
         }
 

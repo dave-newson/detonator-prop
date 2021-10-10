@@ -13,6 +13,7 @@ void Hardware::reset()
     ledArmed->off();
     
     display->clearDisplay();
+    display->setTextSize(1);
     display->setCursor(0,0);
     display->drawPixel(2, 2, WHITE);
     display->display();

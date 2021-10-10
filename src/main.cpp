@@ -43,7 +43,7 @@ int main()
     controller.addRoutine(&r3);
     controller.addRoutine(&r4);
     controller.addRoutine(&r5);
-    controller.setDefaultRoutine(&r2);
+    controller.setDefaultRoutine(&modeSelectRoutine);
     
     Log::info("Setting up mode selection ...");
     modeSelectRoutine.addMode(&r2, "Hardware test");
