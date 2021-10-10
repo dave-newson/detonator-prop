@@ -27,6 +27,7 @@ public:
 private:
     Hardware* hardware;
     TriggerState trigger;
+    Chrono timer1;
     void displayPrint(const char* message, int offset);
 };
 

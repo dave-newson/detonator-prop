@@ -14,6 +14,9 @@ void ManualTriggerRoutine::before()
     // State resets
     trigger = DIRTY;
 
+    // Timers
+    timer1.restart();
+
     // Hardware reset
     hardware->reset();
     hardware->display->setTextSize(4);
@@ -31,15 +34,22 @@ void ManualTriggerRoutine::tick()
         // Show "Safe"
         hardware->ledArmed->off();
         displayPrint("SAFE", 20);
+        hardware->led1->on(Color(0, 128, 0));
+        hardware->led2->on(Color(0, 128, 0));
+        hardware->led3->on(Color(0, 128, 0));
 
         // No other operation
         return;
     }
 
     // -- WHEN ARMED --
+
     // Just show the device is armed
     displayPrint("ARMED", 8);
     hardware->ledArmed->on();
+    hardware->led1->on(Color(255, 0, 0));
+    hardware->led2->on(Color(255, 0, 0));
+    hardware->led3->on(Color(255, 0, 0));
 
     // Listen for first press of the Trigger
     if (trigger == CLEAN && hardware->trigger->isOn()) {
@@ -54,7 +64,7 @@ void ManualTriggerRoutine::tick()
 
 void ManualTriggerRoutine::after()
 {
-    // Noop
+    hardware->reset();
 }
 
 void ManualTriggerRoutine::displayPrint(const char* message, int offset = 8)
